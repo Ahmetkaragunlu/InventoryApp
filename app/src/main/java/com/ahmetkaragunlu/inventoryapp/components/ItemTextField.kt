@@ -1,6 +1,5 @@
 package com.ahmetkaragunlu.inventoryapp.components
 
-import android.graphics.drawable.Icon
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,28 +8,23 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import java.util.Currency
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemTextField(
     modifier: Modifier = Modifier,
-    value : String,
-    onValueChange : (String) -> Unit,
-    @StringRes label : Int,
+    value: String,
+    onValueChange: (String) -> Unit,
+    @StringRes label: Int,
     keyboardOptions: KeyboardOptions,
-    leadingIcon : @Composable (() -> Unit)? = null
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
     OutlinedTextField(
         value = value,
@@ -40,6 +34,8 @@ fun ItemTextField(
         leadingIcon = leadingIcon,
         shape = RoundedCornerShape(topEnd = 16.dp, bottomStart = 16.dp),
         colors = TextFieldDefaults.textFieldColors(containerColor = Color(0xFFe7e0eb)),
-        modifier = modifier.fillMaxWidth().padding(16.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
     )
 }

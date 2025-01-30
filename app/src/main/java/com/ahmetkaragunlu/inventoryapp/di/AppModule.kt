@@ -18,17 +18,15 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesInventoryDao(inventoryDatabase : InventoryDatabase) : InventoryDao
-    = inventoryDatabase.inventoryDao()
+    fun providesInventoryDao(inventoryDatabase: InventoryDatabase): InventoryDao =
+        inventoryDatabase.inventoryDao()
 
     @Singleton
     @Provides
-    fun providesInventoryDatabase(@ApplicationContext context : Context) : InventoryDatabase
-    = Room.databaseBuilder(
-        context,
-        InventoryDatabase::class.java,
-        name = "items")
-        .fallbackToDestructiveMigration().build()
-
-
+    fun providesInventoryDatabase(@ApplicationContext context: Context): InventoryDatabase =
+        Room.databaseBuilder(
+            context,
+            InventoryDatabase::class.java,
+            name = "items"
+        ).fallbackToDestructiveMigration().build()
 }

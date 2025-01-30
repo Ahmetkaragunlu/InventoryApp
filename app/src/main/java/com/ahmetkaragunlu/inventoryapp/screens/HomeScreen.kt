@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
@@ -36,31 +34,32 @@ import com.ahmetkaragunlu.inventoryapp.components.InventoryTopAppBar
 import com.ahmetkaragunlu.inventoryapp.navigation.Screens
 import com.ahmetkaragunlu.inventoryapp.roomdb.Item
 import java.text.NumberFormat
-import java.util.Locale
-
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     itemList: List<Item>,
-    navController: NavController
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
             InventoryTopAppBar(
                 title = R.string.inventory,
                 canNavigateBack = false,
-                navController=navController
+                navController = navController
             )
         },
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
         ) {
-            Column(modifier = modifier.fillMaxWidth()) {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 64.dp)
+            ) {
                 if (itemList.isEmpty()) {
                     Text(
                         text = stringResource(R.string.description),
@@ -76,7 +75,8 @@ fun HomeScreen(
                                     .fillMaxWidth()
                                     .padding(16.dp),
                                 shape = RoundedCornerShape(topEnd = 24.dp, bottomStart = 24.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFe7e0eb))
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFe7e0eb)),
+                                onClick = { navController.navigate("${Screens.DetailScreen.route}/${item.id}") }
                             ) {
                                 Column(
                                     modifier = modifier
@@ -91,34 +91,29 @@ fun HomeScreen(
                                         )
                                         Spacer(modifier = modifier.weight(1f))
                                         Text(
-                                            text = NumberFormat.getCurrencyInstance(Locale.getDefault())
+                                            text = NumberFormat.getCurrencyInstance()
                                                 .format(item.price),
                                             style = MaterialTheme.typography.bodyMedium
                                         )
                                     }
                                     Text(
-                                        text = stringResource(
-                                            id = item.quantity,
-                                            R.string.in_stock
-                                        ),
+                                        text = stringResource(R.string.in_stock, item.quantity),
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
                             }
                         }
                     }
-
                 }
             }
-            Spacer(modifier = modifier.weight(1f))
             Box(
                 modifier = modifier
-                    .padding(16.dp)
+                    .padding(12.dp)
                     .background(
                         color = Color(0xFFe7e0eb),
                         shape = RoundedCornerShape(topEnd = 24.dp, bottomStart = 24.dp)
                     )
-                    .align(Alignment.End),
+                    .align(Alignment.BottomEnd)
             ) {
                 IconButton(
                     onClick = { navController.navigate(Screens.AddItemScreen.route) },
@@ -129,8 +124,6 @@ fun HomeScreen(
                     )
                 }
             }
-
         }
     }
-
 }

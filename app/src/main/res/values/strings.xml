@@ -2,8 +2,12 @@
     <string name="app_name">InventoryApp</string>
     <string name="inventory">Inventory</string>
     <string name="add_item">Add Item</string>
+    <string name="item_details">Item Details</string>
     <string name="item_name">Item Name</string>
     <string name="save">Save</string>
+    <string name="sell">Sell</string>
+    <string name="delete">Delete</string>
+    <string name="price">Price</string>
     <string name="item_price">Item Price</string>
     <string name="quantity_stock">Quantity in Stock</string>
     <string name="in_stock">%d in stock</string>
