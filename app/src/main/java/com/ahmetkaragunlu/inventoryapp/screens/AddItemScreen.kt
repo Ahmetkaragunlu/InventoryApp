@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -16,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,19 +42,28 @@ fun AddItemScreen(
     saveItem: (String, String, String) -> Unit,
     clearItem: () -> Unit
 ) {
-    LaunchedEffect(navController.currentBackStack) {
-        clearItem()
+    val configuration = LocalConfiguration.current
+    val isLandscape =
+        configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+
+    LaunchedEffect(isLandscape) {
+        if (!isLandscape) {
+            clearItem()
+        }
     }
+
+    val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
     Scaffold(topBar = {
         InventoryTopAppBar(
-            title = R.string.add_item, canNavigateBack = true, navController = navController
+            title = R.string.add_item,
+            canNavigateBack = true,
+            navController = navController,
         )
     }) { innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
         ) {
             ItemTextField(
                 value = userName,
@@ -65,7 +73,6 @@ fun AddItemScreen(
                     imeAction = ImeAction.Next, keyboardType = KeyboardType.Text
                 )
             )
-            val currencySymbol = Currency.getInstance(Locale.getDefault()).symbol
             ItemTextField(value = price,
                 onValueChange = { setPrice(it) },
                 label = R.string.item_price,

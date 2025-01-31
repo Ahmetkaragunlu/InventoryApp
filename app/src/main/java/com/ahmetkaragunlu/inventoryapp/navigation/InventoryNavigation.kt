@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ahmetkaragunlu.inventoryapp.screens.AddItemScreen
 import com.ahmetkaragunlu.inventoryapp.screens.DetailScreen
+import com.ahmetkaragunlu.inventoryapp.screens.EditItemScreen
 import com.ahmetkaragunlu.inventoryapp.screens.HomeScreen
 import com.ahmetkaragunlu.inventoryapp.viewmodel.InventoryViewModel
 
@@ -30,9 +31,9 @@ fun InventoryNavigation(viewModel: InventoryViewModel = hiltViewModel()) {
         composable(route = Screens.AddItemScreen.route) {
             AddItemScreen(
                 navController = navController,
-                quantity = viewModel.quantity,
-                price = viewModel.price,
-                userName = viewModel.username,
+                quantity = viewModel.inputQuantity,
+                price = viewModel.inputPrice,
+                userName = viewModel.inputUsername,
                 setName = { viewModel.updateName(it) },
                 setPrice = { viewModel.updatePrice(it) },
                 setQuantity = { viewModel.updateQuantity(it) },
@@ -53,8 +54,17 @@ fun InventoryNavigation(viewModel: InventoryViewModel = hiltViewModel()) {
                 delete = { viewModel.delete(it) }
             )
         }
-        composable(route = Screens.DetailScreen.route) {
-
+        composable(
+            route = "EditItemScreen/{itemId}",
+            arguments = listOf(navArgument(name = "itemId"){type= NavType.IntType})
+        ) { backStackEntry->
+            val itemId= backStackEntry.arguments?.getInt("itemId")
+            EditItemScreen(
+                navController = navController,
+                itemId = itemId,
+                itemList = uiState,
+                editItem = {id,name,quantity,price->viewModel.editItem(id,name,quantity,price)}
+            )
         }
     }
 }

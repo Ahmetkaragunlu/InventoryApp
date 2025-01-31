@@ -18,13 +18,15 @@ import androidx.navigation.NavController
 fun InventoryTopAppBar(
     @StringRes title: Int,
     canNavigateBack: Boolean,
-    navController: NavController
+    navController: NavController,
 ) {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(title)) },
         navigationIcon = {
             if (canNavigateBack) {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = {
+                    navController.popBackStack()
+                }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = null

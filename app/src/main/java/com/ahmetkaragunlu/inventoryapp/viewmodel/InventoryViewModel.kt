@@ -28,25 +28,25 @@ class InventoryViewModel @Inject constructor(private val repository: InventoryRe
         }
     }
 
-    var username by mutableStateOf("")
+    var inputUsername by mutableStateOf("")
         private set
 
     fun updateName(name: String) {
-        username = name
+        inputUsername = name
     }
 
-    var price by mutableStateOf("")
+    var inputPrice by mutableStateOf("")
         private set
 
     fun updatePrice(newPrice: String) {
-        price = newPrice
+        inputPrice = newPrice
     }
 
-    var quantity by mutableStateOf("")
+    var inputQuantity by mutableStateOf("")
         private set
 
     fun updateQuantity(newQuantity: String) {
-        quantity = newQuantity
+        inputQuantity = newQuantity
     }
 
     fun saveItem(name: String, quantity: String, price: String) {
@@ -58,10 +58,17 @@ class InventoryViewModel @Inject constructor(private val repository: InventoryRe
         add(newItem)
     }
 
+    fun editItem(id: Int, name: String, quantity: String, price: String) {
+        val updatedPrice = price.toDoubleOrNull() ?: 0.0
+        val updatedQuantity = quantity.toIntOrNull() ?: 0
+        val newItem = Item(id = id, name = name, quantity = updatedQuantity, price = updatedPrice)
+        update(newItem)
+    }
+
     fun clearItem() {
-        username = ""
-        this.price = ""
-        this.quantity = ""
+        inputUsername = ""
+        inputPrice = ""
+        inputQuantity = ""
     }
 
     fun decQuantity(item: Item) {
