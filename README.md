@@ -1,1 +1,1 @@
-![]https://github.com/Ahmetkaragunlu/InventoryApp/blob/main/InventoryApp.png?raw=true
+![image](https://github.com/Ahmetkaragunlu/InventoryApp/blob/main/InventoryApp.png?raw=true)
